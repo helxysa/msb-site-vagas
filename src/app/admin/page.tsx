@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore'
+import Loading from '../componentes/Loading/Loading'
 import db from '@/lib/firestore'
 
 interface Vaga {
@@ -15,7 +16,7 @@ interface Vaga {
   area: string
 }
 
- export default function AdminPage() {
+export default function AdminPage() {
   const [vagas, setVagas] = useState<Vaga[]>([])
   const [novaVaga, setNovaVaga] = useState<Omit<Vaga, 'id'>>({
     titulo: '',
@@ -28,47 +29,80 @@ interface Vaga {
     area: ''
   })
   const [editandoVaga, setEditandoVaga] = useState<Vaga | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetchVagas()
   }, [])
 
   async function fetchVagas() {
-    const vagasCollection = collection(db, 'vagas')
-    const vagasSnapshot = await getDocs(vagasCollection)
-    const vagasList = vagasSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Vaga))
-    setVagas(vagasList)
+    setIsLoading(true)
+    try {
+      const vagasCollection = collection(db, 'vagas')
+      const vagasSnapshot = await getDocs(vagasCollection)
+      const vagasList = vagasSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Vaga))
+      setVagas(vagasList)
+    } catch (error) {
+      console.error("Erro ao buscar vagas:", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   async function handleAddVaga(e: React.FormEvent) {
     e.preventDefault()
-    await addDoc(collection(db, 'vagas'), novaVaga)
-    setNovaVaga({
-      titulo: '',
-      localizacao: '',
-      descricao: '',
-      responsabilidades: '',
-      requisitos: '',
-      beneficios: '',
-      remuneracao: '',
-      area: ''
-    })
-    fetchVagas()
+    setIsLoading(true)
+    try {
+      await addDoc(collection(db, 'vagas'), novaVaga)
+      setNovaVaga({
+        titulo: '',
+        localizacao: '',
+        descricao: '',
+        responsabilidades: '',
+        requisitos: '',
+        beneficios: '',
+        remuneracao: '',
+        area: ''
+      })
+      await fetchVagas()
+    } catch (error) {
+      console.error("Erro ao adicionar vaga:", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   async function handleUpdateVaga(e: React.FormEvent) {
     e.preventDefault()
     if (editandoVaga) {
-      const vagaRef = doc(db, 'vagas', editandoVaga.id)
-      await updateDoc(vagaRef, editandoVaga as any)
-      setEditandoVaga(null)
-      fetchVagas()
+      setIsLoading(true)
+      try {
+        const vagaRef = doc(db, 'vagas', editandoVaga.id)
+        await updateDoc(vagaRef, editandoVaga as any)
+        setEditandoVaga(null)
+        await fetchVagas()
+      } catch (error) {
+        console.error("Erro ao atualizar vaga:", error)
+      } finally {
+        setIsLoading(false)
+      }
     }
   }
 
   async function handleDeleteVaga(id: string) {
-    await deleteDoc(doc(db, 'vagas', id))
-    fetchVagas()
+    setIsLoading(true)
+    try {
+      await deleteDoc(doc(db, 'vagas', id))
+      await fetchVagas()
+    } catch (error) {
+      console.error("Erro ao excluir vaga:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isLoading) {
+    return <Loading />
   }
 
   return (
@@ -81,17 +115,22 @@ interface Vaga {
           {editandoVaga ? 'Editar Vaga' : 'Adicionar Nova Vaga'}
         </h2>
         {Object.keys(novaVaga).map((campo) => (
-          <input
-            key={campo}
-            type="text"
-            placeholder={campo.charAt(0).toUpperCase() + campo.slice(1)}
-            value={(editandoVaga || novaVaga)[campo as keyof Omit<Vaga, 'id'>]}
-            onChange={(e) => editandoVaga 
-              ? setEditandoVaga({ ...editandoVaga, [campo]: e.target.value })
-              : setNovaVaga({ ...novaVaga, [campo]: e.target.value })
-            }
-            className="w-full p-3 mb-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div key={campo} className="mb-4">
+            <label htmlFor={campo} className="block text-sm font-medium text-gray-700 mb-1">
+              {campo.charAt(0).toUpperCase() + campo.slice(1)}
+            </label>
+            <input
+              id={campo}
+              type="text"
+              placeholder={campo.charAt(0).toUpperCase() + campo.slice(1)}
+              value={(editandoVaga || novaVaga)[campo as keyof Omit<Vaga, 'id'>]}
+              onChange={(e) => editandoVaga 
+                ? setEditandoVaga({ ...editandoVaga, [campo]: e.target.value })
+                : setNovaVaga({ ...novaVaga, [campo]: e.target.value })
+              }
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            />
+          </div>
         ))}
         {editandoVaga ? (
           <div>

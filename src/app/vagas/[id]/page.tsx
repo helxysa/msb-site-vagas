@@ -1,6 +1,10 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
+import { useParams } from 'next/navigation';
+import Loading from '@/app/componentes/Loading/Loading';
 
 interface Vaga {
   id: string;
@@ -25,17 +29,32 @@ async function getVaga(id: string): Promise<Vaga | null> {
   return { id: docSnap.id, ...docSnap.data() } as Vaga;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
-  const vaga = await getVaga(id);
-  return {
-    title: vaga ? `Vaga: ${vaga.titulo}` : 'Vaga não encontrada',
-  };
-}
+  
+export default function VagaDetalhes() {
+  const params = useParams();
+  const [vaga, setVaga] = useState<Vaga | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function VagaDetalhes({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const vaga = await getVaga(id);
+  useEffect(() => {
+    async function fetchVaga() {
+      if (params.id) {
+        try {
+          const vagaData = await getVaga(params.id as string);
+          setVaga(vagaData);
+        } catch (error) {
+          console.error("Erro ao buscar vaga:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchVaga();
+  }, [params.id]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   if (!vaga) {
     return <div className="container mx-auto px-4 py-8">Vaga não encontrada</div>;

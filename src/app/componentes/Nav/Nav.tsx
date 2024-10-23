@@ -13,8 +13,9 @@ export default function Nav() {
   return (
     <nav className="relative px-4 py-4 flex justify-between items-center bg-gray-200 shadow-lgmax-h-screen">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="text-3xl font-bold leading-none">
-          <Image src="/images/logo-msb.png" alt="MSB Logo" width={60} height={60} />
+        <Link href="/" className="text-3xl font-bold leading-none text-gray-900">
+          {/* <Image src="/images/logo-msb.png" alt="MSB Logo" width={60} height={60} /> */}
+          LOGO
         </Link>
         <div className="lg:hidden">
           <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={toggleMenu}>
@@ -24,21 +25,21 @@ export default function Nav() {
             </svg>
           </button>
         </div>
-        <ul className="hidden lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
-          <li><Link href="/todas-vagas/" className="text-sm text-gray-400 hover:text-gray-500">Vagas</Link></li>
-          <li className="text-gray-300">
+        <ul className="hidden lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6 ">
+          <li><Link href="/todas-vagas/" className="text-sm text-gray-900 hover:text-gray-500">Vagas</Link></li>
+          <li className="text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-4 current-fill" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
           </li>
-          <li><Link href="/" className="text-sm text-gray-400 hover:text-gray-500">Preços</Link></li>
-          <li className="text-gray-300">
+          <li><Link href="/" className="text-sm text-gray-900 hover:text-gray-500">Preços</Link></li>
+          <li className="text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-4 current-fill" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
           </li>
-          <li><Link href="/" className="text-sm text-gray-400 hover:text-gray-500">Sobre Nós</Link></li>
-          <li className="text-gray-300">
+          <li><Link href="/" className="text-sm text-gray-900 hover:text-gray-500">Sobre Nós</Link></li>
+          <li className="text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-4 current-fill" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
@@ -58,7 +59,7 @@ export default function Nav() {
                 <Image src="/images/logo-msb.png" alt="MSB Logo" width={40} height={40} />
               </Link>
               <button className="navbar-close" onClick={toggleMenu}>
-                <svg className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-6 w-6 text-gray-900 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
               </button>
@@ -66,16 +67,16 @@ export default function Nav() {
             <div>
               <ul>
                 <li className="mb-1">
-                  <Link href="/pages/todas-vagas" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
+                  <Link href="/pages/todas-vagas" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
                 </li>
                 <li className="mb-1">
-                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Preços</Link>
+                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Preços</Link>
                 </li>
                 <li className="mb-1">
-                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Sobre Nós</Link>
+                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Sobre Nós</Link>
                 </li>
                 <li className="mb-1">
-                  <Link href="/admin/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Área de Administração</Link>
+                  <Link href="/admin/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Área de Administração</Link>
                 </li>
               </ul>
             </div>
