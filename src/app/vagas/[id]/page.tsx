@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
-import { useParams } from 'next/navigation';
+import { use } from 'react';
 import Loading from '@/app/componentes/Loading/Loading';
 import ShareButton from '@/app/componentes/ShareButton/ShareButton';
 import Link from 'next/link';
@@ -32,18 +32,20 @@ async function getVaga(id: string): Promise<Vaga | null> {
 }
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export default function VagaDetalhes({ params }: PageProps) {
+export default function VagaDetalhes({ params, searchParams }: PageProps) {
+  const { id } = use(params);
   const [vaga, setVaga] = useState<Vaga | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchVaga() {
-      if (params.id) {
+      if (id) {
         try {
-          const vagaData = await getVaga(params.id);
+          const vagaData = await getVaga(id);
           setVaga(vagaData);
         } catch (error) {
           console.error("Erro ao buscar vaga:", error);
@@ -54,7 +56,7 @@ export default function VagaDetalhes({ params }: PageProps) {
     }
 
     fetchVaga();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return <Loading />;

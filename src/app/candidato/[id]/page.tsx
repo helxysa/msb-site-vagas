@@ -3,9 +3,8 @@
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
-import { useParams } from 'next/navigation';
+import { use } from 'react';
 import Loading from '@/app/componentes/Loading/Loading';
-import ShareButton from '@/app/componentes/ShareButton/ShareButton';
 import Link from 'next/link';
 
 interface Vaga {
@@ -38,8 +37,15 @@ async function getVaga(id: string): Promise<Vaga | null> {
   return { id: docSnap.id, ...docSnap.data() } as Vaga;
 }
 
-export default function VagaDetalhes() {
-  const params = useParams();
+interface PageProps {
+  params: Promise<{ id: string }>;
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+
+
+export default function VagaDetalhes({ params, searchParams }: PageProps) {
+  const { id } = use(params);
   const [vaga, setVaga] = useState<Vaga | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -55,9 +61,9 @@ export default function VagaDetalhes() {
 
   useEffect(() => {
     async function fetchVaga() {
-      if (params.id) {
+      if (id) {
         try {
-          const vagaData = await getVaga(params.id as string);
+          const vagaData = await getVaga(id as string);
           setVaga(vagaData);
         } catch (error) {
           console.error("Erro ao buscar vaga:", error);
@@ -68,7 +74,7 @@ export default function VagaDetalhes() {
     }
 
     fetchVaga();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return <Loading />;
