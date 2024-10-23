@@ -6,7 +6,7 @@ import { db } from '@/lib/firebaseConfig';
 import { useParams } from 'next/navigation';
 import Loading from '@/app/componentes/Loading/Loading';
 import ShareButton from '@/app/componentes/ShareButton/ShareButton';
-
+import Link from 'next/link';
 
 interface Vaga {
   id: string;
@@ -65,7 +65,25 @@ export default function VagaDetalhes() {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Breadcrumb */}
-      
+      <nav className="bg-white border-b mt-[]">
+        <div className="container mx-auto px-4 py-3">
+          <ol className="list-none p-0 inline-flex">
+            <li className="flex items-center">
+              <Link href="/todas-vagas/" className="text-blue-600 hover:text-blue-800">
+                Vagas
+              </Link>
+              <svg className="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z" />
+              </svg>
+            </li>
+            <li>
+              <span className="text-gray-500">{vaga.titulo}</span>
+            </li>
+          </ol>
+        </div>
+      </nav>
+   
+
 
       {/* Job Header */}
       <div className="bg-white border-b">
@@ -93,9 +111,9 @@ export default function VagaDetalhes() {
                 </div>
               </div>
             </div>
-            <button className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition duration-200 text-sm sm:text-base">
+            <Link href={`/candidato/${vaga.id}`} className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition duration-200 text-sm sm:text-base text-center">
               Candidatar-se
-            </button>
+            </Link>
             <ShareButton id={vaga.id} titulo={vaga.titulo} descricao={vaga.descricao} />
           </div>
         </div>
@@ -153,9 +171,9 @@ export default function VagaDetalhes() {
                 <p className="text-gray-700 text-sm sm:text-base">
                   Clique no botão "Candidatar-se" e preencha o formulário com suas informações.
                 </p>
-                <button className="w-full bg-blue-700 hover:bg-blue-800 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition duration-200 text-sm sm:text-base">
+                <Link href={`/candidato/${vaga.id}`} className="block w-full bg-blue-700 hover:bg-blue-800 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold transition duration-200 text-sm sm:text-base text-center">
                   Candidatar-se Agora
-                </button>
+                </Link>
               </div>
             </div>
           </div>

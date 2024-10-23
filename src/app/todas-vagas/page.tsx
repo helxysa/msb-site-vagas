@@ -10,6 +10,7 @@ interface VagaPreview {
   id: string;
   titulo: string;
   area: string;
+  descricao: string;
 }
 
 async function getVagas(): Promise<VagaPreview[]> {
@@ -19,6 +20,7 @@ async function getVagas(): Promise<VagaPreview[]> {
     id: doc.id,
     titulo: doc.data().titulo,
     area: doc.data().area,
+    descricao: doc.data().descricao,
   }));
 }
 
@@ -91,6 +93,7 @@ function ListaVagasContent({ initialVagas }: { initialVagas: VagaPreview[] }) {
                   </div>
                   
                   <h2 className="text-xl font-semibold text-gray-800 mb-2">{vaga.titulo}</h2>
+                  <h3 className="text-mm text-gray-500 mb-2">{vaga.descricao}</h3>
                   <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                       {vaga.area}
                     </span>
