@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { isSupported, Analytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,6 +25,12 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 // Inicialize o analytics apenas em produção
-if (process.env.NODE_ENV === 'production') {
-   const analytics = getAnalytics(app);
+export let analytics: Analytics | null = null;
+
+if (typeof window !== 'undefined') {
+  isSupported().then(yes => {
+    if (yes) {
+      analytics = getAnalytics(app);
+    }
+  });
 }
