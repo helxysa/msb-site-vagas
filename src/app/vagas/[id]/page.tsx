@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebaseConfig';
-import { use } from 'react';
 import Loading from '@/app/componentes/Loading/Loading';
 import ShareButton from '@/app/componentes/ShareButton/ShareButton';
 import Link from 'next/link';
@@ -32,12 +31,11 @@ async function getVaga(id: string): Promise<Vaga | null> {
 }
 
 interface PageProps {
-  params: Promise<{ id: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: {id: string };
 }
 
-export default function VagaDetalhes({ params, searchParams }: PageProps) {
-  const { id } = use(params);
+export default function VagaDetalhes({ params }: PageProps) {
+  const { id } = params
   const [vaga, setVaga] = useState<Vaga | null>(null);
   const [loading, setLoading] = useState(true);
 
