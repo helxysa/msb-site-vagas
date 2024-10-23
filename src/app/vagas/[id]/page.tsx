@@ -112,7 +112,7 @@ export default function VagaDetalhes() {
               </div>
             </div>
             <Link href={`/candidato/${vaga.id}`} className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition duration-200 text-sm sm:text-base text-center">
-              Candidatar-se
+              Candidatar-se.
             </Link>
             <ShareButton id={vaga.id} titulo={vaga.titulo} descricao={vaga.descricao} />
           </div>
