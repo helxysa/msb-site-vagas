@@ -38,37 +38,70 @@ function ListaVagasContent({ initialVagas }: { initialVagas: VagaPreview[] }) {
     (pesquisa === '' || vaga.titulo.toLowerCase().includes(pesquisa.toLowerCase()) || vaga.area.toLowerCase().includes(pesquisa.toLowerCase()))
   );
 
+  
   return (
     <>
-      <div className="mb-8 flex flex-col sm:flex-row gap-4">
-        <select
-          className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 flex-grow sm:flex-grow-0"
-          value={filtroArea}
-          onChange={(e) => setFiltroArea(e.target.value)}
-        >
-          <option value="">Todas as áreas</option>
-          {areas.map(area => (
-            <option key={area} value={area}>{area}</option>
-          ))}
-        </select>
-        
-        <input
-          type="text"
-          placeholder="Pesquisar vagas..."
-          className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:border-green-500 flex-grow"
-          value={pesquisa}
-          onChange={(e) => setPesquisa(e.target.value)}
-        />
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-white p-4 rounded-lg shadow-lg flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Pesquisar vagas..."
+                className="w-full pl-10 pr-4 py-3 rounded-lg border focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+                value={pesquisa}
+                onChange={(e) => setPesquisa(e.target.value)}
+              />
+              <i className="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="relative">
+              <select
+                className="w-full pl-10 pr-4 py-3 rounded-lg border focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition duration-200"
+                value={filtroArea}
+                onChange={(e) => setFiltroArea(e.target.value)}
+              >
+                <option value="">Todas as áreas</option>
+                {areas.map(area => (
+                  <option key={area} value={area}>{area}</option>
+                ))}
+              </select>
+              <i className="fas fa-map-marker-alt absolute left-3 top-3.5 text-gray-400"></i>
+            </div>
+          </div>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition duration-200">
+            Buscar
+          </button>
+        </div>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {vagasFiltradas.map((vaga) => (
-          <Link href={`/vagas/${vaga.id}`} key={vaga.id} className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 hover:border-green-500">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">{vaga.titulo}</h2>
-            <p className="text-gray-600 bg-gray-100 inline-block px-2 py-1 rounded-full text-sm">{vaga.area}</p>
-            <p className="text-gray-600 text-sm mt-2  underline">Ver mais detalhes</p>
-          </Link>
-        ))}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {vagasFiltradas.map((vaga) => (
+            <Link href={`/vagas/${vaga.id}`} key={vaga.id} className="block">
+              <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition duration-200">
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  <h2 className="text-xl font-semibold text-gray-800 mb-2">{vaga.titulo}</h2>
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                      {vaga.area}
+                    </span>
+                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-200 mt-4">
+                    Ver Detalhes
+                  </button>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );

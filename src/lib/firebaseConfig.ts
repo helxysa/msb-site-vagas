@@ -24,6 +24,9 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
+
+
+
 // Inicialize o analytics apenas em produção
 export let analytics: Analytics | null = null;
 

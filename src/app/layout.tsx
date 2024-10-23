@@ -15,8 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-100"
-      data-new-gr-c-s-check-loaded="14.1087.0"
-        data-gr-ext-installed=""
+        suppressHydrationWarning={true}
+
       >
         <Nav />
         {children}
