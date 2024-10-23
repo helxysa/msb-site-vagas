@@ -67,10 +67,10 @@ export default function Nav() {
             <div>
               <ul>
                 <li className="mb-1">
-                  <Link href="/pages/todas-vagas" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
+                  <Link href="/todas-vagas/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
                 </li>
                 <li className="mb-1">
-                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Preços</Link>
+                  <Link href="/precos/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Preços</Link>
                 </li>
                 <li className="mb-1">
                   <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Sobre Nós</Link>
