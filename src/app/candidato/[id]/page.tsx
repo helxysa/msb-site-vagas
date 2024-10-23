@@ -63,7 +63,7 @@ export default function VagaDetalhes({ params, searchParams }: PageProps) {
     async function fetchVaga() {
       if (id) {
         try {
-          const vagaData = await getVaga(id as string);
+          const vagaData = await getVaga(id);
           setVaga(vagaData);
         } catch (error) {
           console.error("Erro ao buscar vaga:", error);
