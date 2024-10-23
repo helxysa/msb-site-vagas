@@ -105,8 +105,6 @@ export default function SobrePage() {
       });
   
       // Sobre a MSB (ajuste a posição conforme necessário)
-      const lastPage = pdf.internal.getNumberOfPages();
-      pdf.setPage(lastPage);
   
       pdf.setFontSize(18);
       pdf.setTextColor(0, 0, 139);
