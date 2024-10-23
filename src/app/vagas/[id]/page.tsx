@@ -31,9 +31,11 @@ async function getVaga(id: string): Promise<Vaga | null> {
   return { id: docSnap.id, ...docSnap.data() } as Vaga;
 }
 
-  
-export default function VagaDetalhes() {
-  const params = useParams();
+interface PageProps {
+  params: { id: string };
+}
+
+export default function VagaDetalhes({ params }: PageProps) {
   const [vaga, setVaga] = useState<Vaga | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +43,7 @@ export default function VagaDetalhes() {
     async function fetchVaga() {
       if (params.id) {
         try {
-          const vagaData = await getVaga(params.id as string);
+          const vagaData = await getVaga(params.id);
           setVaga(vagaData);
         } catch (error) {
           console.error("Erro ao buscar vaga:", error);
