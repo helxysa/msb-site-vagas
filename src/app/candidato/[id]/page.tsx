@@ -46,6 +46,7 @@ interface PageProps {
 
 export default function VagaDetalhes({ params, searchParams }: PageProps) {
   const { id } = use(params);
+  //teste
   const [vaga, setVaga] = useState<Vaga | null>(null);
   const [loading, setLoading] = useState(true);
 
