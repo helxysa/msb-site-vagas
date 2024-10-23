@@ -25,7 +25,7 @@ export default function Nav() {
           </button>
         </div>
         <ul className="hidden lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
-          <li><Link href="/pages/vagas" className="text-sm text-gray-400 hover:text-gray-500">Vagas</Link></li>
+          <li><Link href="/todas-vagas/" className="text-sm text-gray-400 hover:text-gray-500">Vagas</Link></li>
           <li className="text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-4 current-fill" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -45,7 +45,7 @@ export default function Nav() {
           </li>
         </ul>
         <div className="hidden lg:block">
-          <Link href="/pages/admin" className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full transition duration-300">Área de Administração</Link>
+          <Link href="/admin/" className="text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full transition duration-300">Área de Administração</Link>
         </div>
       </div>
       
@@ -66,7 +66,7 @@ export default function Nav() {
             <div>
               <ul>
                 <li className="mb-1">
-                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
+                  <Link href="/pages/todas-vagas" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
                 </li>
                 <li className="mb-1">
                   <Link href="/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Preços</Link>
@@ -75,7 +75,7 @@ export default function Nav() {
                   <Link href="/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Sobre Nós</Link>
                 </li>
                 <li className="mb-1">
-                  <Link href="/pages/admin" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Área de Administração</Link>
+                  <Link href="/admin/" className="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded">Área de Administração</Link>
                 </li>
               </ul>
             </div>
