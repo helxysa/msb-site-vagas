@@ -18,6 +18,7 @@ interface CandidatoFormProps {
 }
 
 export default function CandidatoForm({ vaga }: CandidatoFormProps) {
+  console.log(vaga)
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [telefone, setTelefone] = useState('');

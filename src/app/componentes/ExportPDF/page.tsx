@@ -41,7 +41,7 @@ export default function SobrePage() {
     getVagas().then(async fetchedVagas => {
       setVagas(fetchedVagas);
       const codes = await Promise.all(fetchedVagas.map(vaga => 
-        QRCode.toDataURL(`${encodeURIComponent(window.location.origin)}/vagas/${vaga.id}`)
+        QRCode.toDataURL(`${(window.location.origin)}/vagas/${vaga.id}`)
       ));
       setQrCodes(codes);
     });
@@ -105,7 +105,7 @@ export default function SobrePage() {
       });
   
       // Sobre a MSB (ajuste a posição conforme necessário)
-  
+        
       pdf.setFontSize(18);
       pdf.setTextColor(0, 0, 139);
       pdf.text("Sobre a MSB", 10, 240);
