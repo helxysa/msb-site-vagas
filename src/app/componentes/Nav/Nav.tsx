@@ -10,12 +10,15 @@ export default function Nav() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="relative px-4 py-4 flex justify-between items-center bg-gray-200 shadow-lgmax-h-screen">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-3xl font-bold leading-none text-gray-900">
-          {/* <Image src="/images/logo-msb.png" alt="MSB Logo" width={60} height={60} /> */}
-          LOGO
+          <Image src="/images/logo-msb.png" alt="MSB Logo" width={60} height={60} />
         </Link>
         <div className="lg:hidden">
           <button className="navbar-burger flex items-center text-blue-600 p-3" onClick={toggleMenu}>
@@ -51,36 +54,27 @@ export default function Nav() {
       </div>
       
       {isMenuOpen && (
-        <div className="navbar-menu relative z-50 lg:hidden">
-          <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
-          <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
-            <div className="flex items-center mb-8">
-              <Link href="/" className="mr-auto text-3xl font-bold leading-none">
-                <Image src="/images/logo-msb.png" alt="MSB Logo" width={40} height={40} />
-              </Link>
-              <button className="navbar-close" onClick={toggleMenu}>
-                <svg className="h-6 w-6 text-gray-900 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </button>
-            </div>
-            <div>
-              <ul>
-                <li className="mb-1">
-                  <Link href="/todas-vagas/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Vagas</Link>
-                </li>
-                <li className="mb-1">
-                  <Link href="/precos/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Preços</Link>
-                </li>
-                <li className="mb-1">
-                  <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Sobre Nós</Link>
-                </li>
-                <li className="mb-1">
-                  <Link href="/admin/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded">Área de Administração</Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
+      <div className="navbar-menu relative z-50 lg:hidden">
+        <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+        <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">
+          {/* ... existing code ... */}
+          <div>
+            <ul>
+              <li className="mb-1">
+                <Link href="/todas-vagas/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Vagas</Link>
+              </li>
+              <li className="mb-1">
+                <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Preços</Link>
+              </li>
+              <li className="mb-1">
+                <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Sobre Nós</Link>
+              </li>
+              <li className="mb-1">
+                <Link href="/admin/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Área de Administração</Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
         </div>
       )}
     </nav>

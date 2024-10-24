@@ -1,5 +1,7 @@
 'use client'
 import { useState, FormEvent } from 'react';
+import { addDoc, collection } from 'firebase/firestore';
+import db from '@/lib/firestore'; 
 
 interface Vaga {
   id: string;
@@ -18,18 +20,44 @@ interface CandidatoFormProps {
 }
 
 export default function CandidatoForm({ vaga }: CandidatoFormProps) {
-  console.log(vaga)
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [telefone, setTelefone] = useState('');
   const [informacoesAdicionais, setInformacoesAdicionais] = useState('');
   const [linkCurriculo, setLinkCurriculo] = useState('');
   const [aceitouTermos, setAceitouTermos] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aqui você pode adicionar a lógica para enviar os dados do formulário
-    console.log('Dados do formulário:', { nome, email, telefone, informacoesAdicionais, linkCurriculo, aceitouTermos });
+    setSubmitStatus('idle');
+    
+    try {
+      const docRef = await addDoc(collection(db, 'candidatos'), {
+        nome,
+        email,
+        telefone,
+        informacoesAdicionais,
+        linkCurriculo,
+        aceitouTermos,
+        vagaId: vaga?.id,
+        dataCandidatura: new Date().toISOString(),
+      });
+
+      console.log('Candidatura enviada com sucesso. ID:', docRef.id);
+      setSubmitStatus('success');
+      
+      // Reset form fields
+      setNome('');
+      setEmail('');
+      setTelefone('');
+      setInformacoesAdicionais('');
+      setLinkCurriculo('');
+      setAceitouTermos(false);
+    } catch (error) {
+      console.error('Erro ao enviar candidatura:', error);
+      setSubmitStatus('error');
+    }
   };
 
   return (
@@ -48,7 +76,7 @@ export default function CandidatoForm({ vaga }: CandidatoFormProps) {
                 required
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 text-gray-900 focus:border-blue-600 transition duration-200"
                 placeholder="Digite seu nome completo"
               />
             </div>
@@ -61,7 +89,7 @@ export default function CandidatoForm({ vaga }: CandidatoFormProps) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
+                className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
                 placeholder="seu@email.com"
               />
             </div>
@@ -74,7 +102,7 @@ export default function CandidatoForm({ vaga }: CandidatoFormProps) {
                 required
                 value={telefone}
                 onChange={(e) => setTelefone(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
+                className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
                 placeholder="(11) 99999-9999"
               />
             </div>
@@ -86,7 +114,7 @@ export default function CandidatoForm({ vaga }: CandidatoFormProps) {
                 id="linkCurriculo"
                 value={linkCurriculo}
                 onChange={(e) => setLinkCurriculo(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
+                className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
                 placeholder="https://exemplo.com/seu-curriculo"
               />
             </div>
@@ -105,7 +133,7 @@ export default function CandidatoForm({ vaga }: CandidatoFormProps) {
               rows={4}
               value={informacoesAdicionais}
               onChange={(e) => setInformacoesAdicionais(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
+              className="w-full px-4 py-3 text-gray-900 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition duration-200"
               placeholder="Conte-nos mais sobre você..."
             ></textarea>
           </div>
@@ -127,9 +155,19 @@ export default function CandidatoForm({ vaga }: CandidatoFormProps) {
             </span>
           </label>
 
+          {submitStatus === 'success' && (
+            <p className="text-green-600 font-medium">Candidatura enviada com sucesso!</p>
+          )}
+          {submitStatus === 'error' && (
+            <p className="text-red-600 font-medium">Erro ao enviar candidatura. Por favor, tente novamente.</p>
+          )}
+
           <div className="flex flex-col-reverse sm:flex-row gap-4 justify-end">
-            <button type="submit" 
-              className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition duration-200">
+            <button 
+              type="submit" 
+              className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition duration-200"
+              disabled={submitStatus === 'success'}
+            >
               Enviar Candidatura
             </button>
           </div>
