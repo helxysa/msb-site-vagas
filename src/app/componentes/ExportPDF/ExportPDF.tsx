@@ -11,6 +11,9 @@ interface VagaPreview {
   titulo: string;
   area: string;
   descricao: string;
+  requisitos: string[];
+  beneficios: string[];
+  responsabilidades: string[];
 }
 
 async function getVagas(): Promise<VagaPreview[]> {
@@ -18,9 +21,12 @@ async function getVagas(): Promise<VagaPreview[]> {
   const vagasSnapshot = await getDocs(vagasRef);
   return vagasSnapshot.docs.map(doc => ({
     id: doc.id,
-    titulo: doc.data().titulo,
-    area: doc.data().area,
-    descricao: doc.data().descricao,
+    titulo: doc.data().titulo || '',
+    area: doc.data().area || '',
+    descricao: doc.data().descricao || '',
+    requisitos: doc.data().requisitos || [],
+    beneficios: doc.data().beneficios || [],
+    responsabilidades: doc.data().responsabilidades || [],
   }));
 }
 
@@ -55,7 +61,6 @@ export default function ExportPDF() {
         format: 'a4'
       });
 
-      // Cabeçalho
       pdf.setFillColor(173, 216, 230);
       pdf.rect(0, 0, 210, 50, 'F');
       pdf.setFillColor(154, 205, 50);
@@ -100,23 +105,31 @@ export default function ExportPDF() {
         pdf.setTextColor(80);
         pdf.text(`Objetivo: ${vaga.descricao}`, 15, yPos + 15, { maxWidth: 120 });
         
-        pdf.setTextColor(154, 205, 50);
-        pdf.text("Acesse o formulário para essa vaga →", 15, yPos + 45);
+       
+        pdf.setFontSize(10);
+        pdf.setTextColor(0, 51, 102);
+        pdf.text("Acesse o formulário para essa vaga no QRCode", 20, yPos + 40);
 
-        // Add QR code
+        // QR Code - Menor e reposicionado
         if (qrCodes[index]) {
-          pdf.addImage(qrCodes[index], 'PNG', 165, yPos, 30, 30);
+          pdf.addImage(qrCodes[index], 'PNG', 150, yPos, 40, 40);
         }
+        
+        // Link para o formulário com seta
+        
       });
 
+      // Última página com informações da empresa
+      pdf.addPage();
+      
       // Sobre a MSB
       pdf.setFontSize(18);
       pdf.setTextColor(0, 0, 139);
-      pdf.text("Sobre a MSB", 10, 240);
+      pdf.text("Sobre a MSB", 10, 30);
       
       pdf.setFontSize(12);
       pdf.setTextColor(80);
-      pdf.text("Fundada em 2010, a MSB é referência em soluções eficientes de tecnologia de informação e comunicação. Nossa equipe é capaz de atender qualquer desafio tecnológico transformador da tecnologia para todos os setores.", 10, 250, { maxWidth: 190 });
+      pdf.text("Fundada em 2010, a MSB é referência em soluções eficientes de tecnologia de informação e comunicação. Nossa equipe é capaz de atender qualquer desafio tecnológico transformador da tecnologia para todos os setores.", 10, 50, { maxWidth: 190 });
 
       // Rodapé
       pdf.setFillColor(173, 216, 230);
