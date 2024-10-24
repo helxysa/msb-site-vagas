@@ -1,4 +1,5 @@
 import { getCandidatos, getVaga } from '../Actions/actions';
+import Loading from '@/app/componentes/Loading/Loading';
 
 async function Candidatos() {
   try {
@@ -13,6 +14,10 @@ async function Candidatos() {
         };
       })
     );
+
+    if (!candidatosComVagas) {
+      return <Loading />;
+    }
 
     return (
       <div className="container mx-auto px-4 py-8">

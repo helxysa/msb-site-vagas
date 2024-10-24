@@ -32,17 +32,6 @@ import {
     vagaId: string;
   }
 
-  interface Candidatura {
-    id: string;
-    aceitouTermos: boolean;
-    dataCandidatura: Date;
-    email: string;
-    informacoesAdicionais: string;
-    linkCurriculo: string;
-    nome: string;
-    telefone: string;
-    vagaId: string;
-  }
 
   async function getVagas(): Promise<Vaga[]> {
     try {
