@@ -1,11 +1,9 @@
-import AdminComponente from "./AdminComponente/AdminComponente";
-import DashboardComponente from "./DashboardComponente/DashboardComponente";
+import DashboardComponente from "./dashboard/DashboardComponente";
 
 export default function AdminPage() {
   return (
     <div>
       <DashboardComponente />
-      <AdminComponente />
     </div>
   );
 }

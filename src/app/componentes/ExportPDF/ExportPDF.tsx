@@ -47,11 +47,13 @@ export default function ExportPDF() {
     });
   }, []);
 
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
   const exportPDF = () => {
     try {
-      const pdf = new jsPDF();
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
 
       // Cabeçalho
       pdf.setFillColor(173, 216, 230);
@@ -126,6 +128,8 @@ export default function ExportPDF() {
       pdf.setFontSize(10);
       pdf.text("Entre em contato para saber mais: 11 5188 3430", 110, 290, { align: 'right' });
 
+      // Salvar o PDF
+      pdf.save('vagas-msb.pdf');
      
     } catch (error) {
       console.error('Erro ao gerar PDF:', error);
@@ -134,9 +138,12 @@ export default function ExportPDF() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 ">
+    <div className="container mx-auto px-4 py-8">
       <button 
-        onClick={exportPDF} 
+        onClick={() => {
+          console.log("Iniciando geração do PDF");
+          exportPDF();
+        }}
         className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 flex items-center"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
