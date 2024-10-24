@@ -26,6 +26,8 @@ interface Vaga {
 }
 
 export default function AdminPage() {
+  const [isBulletList, setIsBulletList] = useState(false);
+
   const [vagas, setVagas] = useState<Vaga[]>([]);
   const [novaVaga, setNovaVaga] = useState<Omit<Vaga, "id">>({
     titulo: "",
@@ -374,50 +376,83 @@ export default function AdminPage() {
               </div>
 
               <div className="md:col-span-2">
-                <label htmlFor="beneficios" className="text-gray-700 font-semibold">
-                  Benefícios
-                </label>
-                <textarea
-                  id="beneficios"
-                  value={(editandoVaga || novaVaga).beneficios}
-                  onChange={(e) =>
-                    editandoVaga
-                      ? setEditandoVaga({
-                          ...editandoVaga,
-                          beneficios: e.target.value,
-                        })
-                      : setNovaVaga({
-                          ...novaVaga,
-                          beneficios: e.target.value,
-                        })
-                  }
-                  className="h-32 border mt-1 rounded px-4 w-full bg-gray-50 shadow-sm py-2 text-gray-900"
-                  placeholder="Liste os benefícios oferecidos..."
-                ></textarea>
-              </div>
+                      <label htmlFor="beneficios" className="text-gray-700 font-semibold">
+                        Benefícios
+                      </label>
+                      <div className="flex items-center mb-2">
+                        <input
+                          type="checkbox"
+                          id="bulletList"
+                          checked={isBulletList}
+                          onChange={() => setIsBulletList(!isBulletList)}
+                          className="mr-2"
+                        />
+                        <label htmlFor="bulletList" className="text-gray-700">
+                          Inserir como tópicos
+                        </label>
+                      </div>
+                      <textarea
+                        id="beneficios"
+                        value={(editandoVaga || novaVaga).beneficios}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          const lines = value.split('\n');
+                          const formattedValue = lines.map((line, index) => {
+                            if (isBulletList && line && !line.startsWith('• ')) {
+                              return `• ${line}`;
+                            }
+                            return line;
+                          }).join('\n');
+
+                          if (editandoVaga) {
+                            setEditandoVaga({
+                              ...editandoVaga,
+                              beneficios: formattedValue,
+                            });
+                          } else {
+                            setNovaVaga({
+                              ...novaVaga,
+                              beneficios: formattedValue,
+                            });
+                          }
+                        }}
+                        className="h-32 border mt-1 rounded px-4 w-full bg-gray-50 shadow-sm py-2 text-gray-900"
+                        placeholder="Liste os benefícios oferecidos..."
+                      ></textarea>
+                    </div>
 
               <div className="md:col-span-2">
                 <label htmlFor="remuneracao" className="text-gray-700 font-semibold">
                   Remuneração
                 </label>
                 <input
-                  type="text"
-                  id="remuneracao"
-                  value={(editandoVaga || novaVaga).remuneracao}
-                  onChange={(e) =>
-                    editandoVaga
-                      ? setEditandoVaga({
-                          ...editandoVaga,
-                          remuneracao: e.target.value,
-                        })
-                      : setNovaVaga({
-                          ...novaVaga,
-                          remuneracao: e.target.value,
-                        })
-                  }
-                  className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 shadow-sm text-gray-900"
-                  placeholder="Ex: R$ 5.000 - R$ 7.000"
-                />
+                    type="text"
+                    id="remuneracao"
+                    value={(editandoVaga || novaVaga).remuneracao}
+                    onFocus={(e) => {
+                      if (!e.target.value.startsWith("R$")) {
+                        e.target.value = "R$ " + e.target.value;
+                      }
+                    }}
+                    onBlur={(e) => {
+                      if (e.target.value === "R$ ") {
+                        e.target.value = "";
+                      }
+                    }}
+                    onChange={(e) =>
+                      editandoVaga
+                        ? setEditandoVaga({
+                            ...editandoVaga,
+                            remuneracao: e.target.value,
+                          })
+                        : setNovaVaga({
+                            ...novaVaga,
+                            remuneracao: e.target.value,
+                          })
+                    }
+                    className="h-10 border mt-1 rounded px-4 w-full bg-gray-50 shadow-sm text-gray-900"
+                    placeholder="Ex: R$ 5.000 - R$ 7.000"
+                  />
               </div>
 
               <div className="md:col-span-2 text-right mt-4">

@@ -29,6 +29,9 @@ import {
     nome: string;
     email: string;
     telefone: string;
+    informacoesAdicionais?: string;
+    linkCurriculo?: string;
+    dataCandidatura?: Date;
     vagaId: string;
   }
 

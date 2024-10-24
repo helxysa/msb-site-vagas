@@ -31,6 +31,13 @@ async function Candidatos() {
                 <h2 className="text-xl font-semibold mb-2">{candidato.nome}</h2>
                 <p className="text-gray-600 mb-2">Email: {candidato.email}</p>
                 <p className="text-gray-600 mb-2">Telefone: {candidato.telefone}</p>
+                {candidato.linkCurriculo && (
+                  <p className="text-gray-600 mb-2">Link do Currículo: {candidato.linkCurriculo}</p>
+                )}
+                {candidato.informacoesAdicionais && (
+                  <p className="text-gray-600 mb-2">Informações Adicionais: {candidato.informacoesAdicionais}</p>
+                )}
+
                 {candidato.vaga ? (
                   <div className="text-gray-600 mb-2">
                     <p className="font-semibold">Vaga: {candidato.vaga?.titulo}</p>

@@ -41,7 +41,7 @@ export default function Nav() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
             </svg>
           </li>
-          <li><Link href="/" className="text-sm text-gray-900 hover:text-gray-500">Sobre Nós</Link></li>
+          <li><Link href="/sobre-nos/" className="text-sm text-gray-900 hover:text-gray-500">Sobre Nós</Link></li>
           <li className="text-gray-900">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" className="w-4 h-4 current-fill" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -67,7 +67,7 @@ export default function Nav() {
                 <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Preços</Link>
               </li>
               <li className="mb-1">
-                <Link href="/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Sobre Nós</Link>
+                <Link href="/sobre-nos/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Sobre Nós</Link>
               </li>
               <li className="mb-1">
                 <Link href="/admin/" className="block p-4 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 rounded" onClick={closeMenu}>Área de Administração</Link>

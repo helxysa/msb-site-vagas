@@ -82,14 +82,12 @@ export default async function VagaDetalhes({ params }: { params: Promise<{ id: s
             </div>
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">{vaga.titulo}</h1>
             <div className="flex flex-wrap gap-4 text-gray-700">
+              
               <div className="flex items-center gap-2">
                 <i className="fas fa-map-marker-alt"></i>
                 <span className="text-sm sm:text-base">{vaga.localizacao}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <i className="fas fa-money-bill-wave"></i>
-                <span className="text-sm sm:text-base">{vaga.remuneracao}</span>
-              </div>
+              
             </div>
           </div>
           <Link href={`/candidato/${vaga.id}`} className="w-full sm:w-auto bg-blue-700 hover:bg-blue-800 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition duration-200 text-sm sm:text-base text-center">
@@ -107,17 +105,48 @@ export default async function VagaDetalhes({ params }: { params: Promise<{ id: s
         <div className="lg:col-span-2">
           {/* Job Description */}
           <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-6">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900">Descrição da Vaga</h2>
-            <p className="text-gray-700 mb-6 text-sm sm:text-base">{vaga.descricao}</p>
+          {vaga.descricao && (
+              <>
+                <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900">Descrição da Vaga</h2>
+                <p className="text-gray-700 mb-6 text-sm sm:text-base">{vaga.descricao}</p>
+              </>
+            )}
             
-            <h3 className="font-semibold mb-3 text-gray-800">Responsabilidades:</h3>
-            <p className="text-gray-700 mb-6 text-sm sm:text-base">{vaga.responsabilidades}</p>
+            {vaga.responsabilidades && (
+              <>
+                <h3 className="font-semibold mb-3 text-gray-800">Responsabilidades:</h3>
+                <p className="text-gray-700 mb-6 text-sm sm:text-base">{vaga.responsabilidades}</p>
+              </>
+            )}
   
-            <h3 className="font-semibold mb-3 text-gray-800">Requisitos:</h3>
-            <p className="text-gray-700 mb-6 text-sm sm:text-base">{vaga.requisitos}</p>
+        {vaga.requisitos && (
+              <>
+                <h3 className="font-semibold mb-3 text-gray-800">Requisitos:</h3>
+                <ul className="text-gray-700 text-sm sm:text-base ml-3 mb-3">
+                  {vaga.requisitos.split('•').filter(requisito => requisito.trim() !== '').map((requisito, index) => (
+                    <li key={index}>{requisito.trim().startsWith('•') ? requisito.trim() : `• ${requisito.trim()}`}</li>
+                  ))}
+                </ul>
+              </>
+            )}
   
-            <h3 className="font-semibold mb-3 text-gray-800">Benefícios:</h3>
-            <p className="text-gray-700 text-sm sm:text-base">{vaga.beneficios}</p>
+          {vaga.beneficios && (
+              <>
+                <h3 className="font-semibold mb-3 text-gray-800">Benefícios:</h3>
+                <ul className="text-gray-700 text-sm sm:text-base ml-3 mb-3">
+                  {vaga.beneficios.split('•').filter(beneficio => beneficio.trim() !== '').map((beneficio, index) => (
+                    <li key={index}>• {beneficio.trim()}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+            
+            {vaga.remuneracao && (
+              <>
+                <h3 className="font-semibold mb-3  text-gray-800">Remuneração:</h3>
+                <p className="text-gray-700 text-sm sm:text-base">{vaga.remuneracao}</p>
+              </>
+            )}
           </div>
   
           {/* Tech Stack */}
